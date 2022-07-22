@@ -5,14 +5,14 @@ import lbd.fissst.springsecurity2lbd.model.AppUser;
 import lbd.fissst.springsecurity2lbd.security.UserPermissions;
 import lbd.fissst.springsecurity2lbd.service.definition.AppUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -24,7 +24,7 @@ public class RegisterController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public void createUser(@RequestBody UserRegistrationRequest userRegistrationRequest){
+    public ResponseEntity<Void> createUser(@RequestBody UserRegistrationRequest userRegistrationRequest){
         AppUser user = AppUser.builder()
                 .id(null)
                 .username(userRegistrationRequest.getUsername())
@@ -35,5 +35,8 @@ public class RegisterController {
                 .build();
 
         userService.createUser(user);
+
+        return ResponseEntity.ok()
+                .build();
     }
 }
