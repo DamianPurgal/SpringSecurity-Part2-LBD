@@ -29,10 +29,11 @@ public class DecimalControllerTests {
 
     @Test
     void setDecimal() throws Exception {
-        int decimal = 10;
+        int decimal = 3;
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/decimal")
                         .param("decimal", Integer.toString(decimal))
+                        .header("decimalPlaces", "3")
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
